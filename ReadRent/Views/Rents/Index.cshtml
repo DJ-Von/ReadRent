@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ReadRent.Models.Rent>
+
+@{
+    ViewBag.Title = "Index";
+    bool ascending = ViewData["SortOrder"] == null || ViewData["SortOrder"].ToString() == "asc";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+@*Для статуса оплаты сделать условие, если 0, вывод "неоплачен", 1 - "олачен"*@
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Дата выдачи", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "date_begin" })
+        </th>
+        <th>
+            @Html.ActionLink("Дата возврата", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "date_end" })
+        </th>
+        <th>
+            @Html.ActionLink("Сумма", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "summ" })
+        </th>
+        <th>
+            @Html.ActionLink("Статус оплаты", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "payment_status" })
+        </th>
+        <th>
+            @Html.ActionLink("Название книги", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "title" })
+        </th>
+        <th>
+            @Html.ActionLink("ФИО арендатора", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "realname" })
+        </th>
+        <th>
+            @Html.ActionLink("Имя пользователя", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "username" })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.User.id.Equals(Session["user_id"]) || !Session["user_role"].Equals("Клиент"))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date_begin).ToString().Remove(9, 8)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date_end).ToString().Remove(9, 8)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.summ)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.payment_status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Assortment.Book.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.realname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.username)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+         }
+        }
+
+</table>

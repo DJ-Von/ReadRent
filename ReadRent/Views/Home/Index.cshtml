@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+    @if (Session["realname"] != null)
+    {
+        <p>ФИО: @Session["realname"].ToString()</p>
+        <p>Имя пользователя: @Session["username"].ToString()</p>
+        <a href="@Url.Action("Logout","Home")" class="btn btn-warning">Logout</a>
+    }
+
+</main>

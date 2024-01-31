@@ -1,0 +1,62 @@
+﻿@model ReadRent.Models.User
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="row justify-content-md-center">
+    <div class="col-md-5">
+        @using (Html.BeginForm("Register", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            //@Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Регистрация</div>
+                </div>
+                <div class="card-body">
+
+                    <div class="editor-label">Фото</div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.img, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="file" name="upload" value="Обзор..." />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @*@Html.LabelFor(m => m.realname)*@
+                        @Html.TextBoxFor(m => m.realname, "", new { @class = "form-control", @placeholder = "ФИО" })
+                        @Html.ValidationMessageFor(m => m.realname, "", new { @class = "badge badge-danger" })
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.username, "", new { @class = "form-control", @placeholder = "Имя пользователя (логин)" })
+                        @Html.ValidationMessageFor(m => m.username, "", new { @class = "badge badge-danger" })
+                        @if (ViewBag.error != null)
+                        {
+                            <span class="badge badge-danger">@ViewBag.error</span>
+                        }
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        @Html.PasswordFor(m => m.password_hash, new { @class = "form-control", @placeholder = "Пароль" })
+                        @Html.ValidationMessageFor(m => m.password_hash, "", new { @class = "badge badge-danger" })
+                    </div>
+                    @*<div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword)
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confim Password" })
+            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "badge badge-danger" })
+        </div>*@
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-danger" value="Register" />
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

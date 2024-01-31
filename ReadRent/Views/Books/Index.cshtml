@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ReadRent.Models.Book>
+
+@{
+    ViewBag.Title = "Index";
+    bool ascending = ViewData["SortOrder"] == null || ViewData["SortOrder"].ToString() == "asc";
+}
+
+<h2>Книги</h2>
+
+<p>
+    @Html.ActionLink("Добавить новую книгу", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<a href="@Url.Action("DownloadWord","Books")" class="btn btn-warning">Скачать таблицу в Word</a>
+
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink("Название", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "title" })
+            </th>
+            <th>
+                @Html.ActionLink("Автор", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "author" })
+            </th>
+            <th>
+                @Html.ActionLink("Цена", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "price" })
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.price)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        }
+
+    </table>*@
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Карточки книг на главной странице -->
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3" style="margin-bottom: 10px;">
+                <div class="card">
+                    @*<img src="book1.jpg" class="card-img-top" alt="Книга 1">*@
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.title)</h5>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.author)</p>
+                        <h5>@Html.DisplayFor(modelItem => item.price) руб.</h5>
+                        @Html.ActionLink("Подробнее", "Details", new { id = item.id })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

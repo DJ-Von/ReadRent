@@ -1,0 +1,131 @@
+﻿@model ReadRent.Models.User
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @{ byte[] photo = Model.img;
+                string imageSrc = null;
+                if (photo != null)
+                {
+                    MemoryStream ms = new MemoryStream();
+                    ms.Write(photo, 0, photo.Length);
+                    string imageBase64 = Convert.ToBase64String(ms.ToArray());
+                    imageSrc = string.Format("data:image/jpg;base64,{0}", imageBase64);
+                    string base64String = Convert.ToBase64String(photo, 0, photo.Length);
+                }
+            }
+
+            <img src="@imageSrc" alt="Image" width="150" height="100" />
+        </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.realname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.realname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.password_hash)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.password_hash)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserCategory.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserCategory.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserRole.role_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserRole.role_name)
+        </dd>
+
+    </dl>
+    <table class="table">
+        <tr>
+            <th>
+                Книга
+            </th>
+            <th>
+                Взята
+            </th>
+            <th>
+                Отдана
+            </th>
+            <th>
+                Цена
+            </th>
+            <th>
+                Статус оплаты
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Rents)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Assortment.Book.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date_begin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date_end)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.summ)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.payment_status)
+                </td>
+            </tr>
+        }
+    </table>
+
+    <table class="table">
+        <tr>
+            <th>
+                Сумма штрафа
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Fines)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.summ)
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

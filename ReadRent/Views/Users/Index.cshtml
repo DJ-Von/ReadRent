@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ReadRent.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+    bool ascending = ViewData["SortOrder"] == null || ViewData["SortOrder"].ToString() == "asc";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Аватар
+        </th>
+        <th>
+            @Html.ActionLink("ФИО", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "realname" })
+        </th>
+        <th>
+            @Html.ActionLink("Логин", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "username" })
+        </th>
+        <th>
+            @Html.ActionLink("Категория", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "category_id" })
+        </th>
+        <th>
+            @Html.ActionLink("Роль", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "role_id" })
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @{ byte[] photo = item.img;
+                    string imageSrc = null;
+                    if (photo != null)
+                    {
+                        MemoryStream ms = new MemoryStream();
+                        ms.Write(photo, 0, photo.Length);
+                        string imageBase64 = Convert.ToBase64String(ms.ToArray());
+                        imageSrc = string.Format("data:image/jpg;base64,{0}", imageBase64);
+                        string base64String = Convert.ToBase64String(photo, 0, photo.Length);
+                    }
+                }
+                <img src="@imageSrc" alt="Image" width="150" height="100" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.realname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserCategory.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserRole.role_name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

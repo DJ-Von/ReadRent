@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ReadRent.Models.UserCategory>
+
+@{
+    ViewBag.Title = "Index";
+    bool ascending = ViewData["SortOrder"] == null || ViewData["SortOrder"].ToString() == "asc";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Категория", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "title" })
+        </th>
+        <th>
+            @Html.ActionLink("Скидка", "Index", new { sortOrder = (ascending ? "desc" : "asc"), sortColumn = "discount" })
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.discount)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

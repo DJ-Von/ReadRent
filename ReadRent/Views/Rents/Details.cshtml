@@ -1,0 +1,66 @@
+﻿@model ReadRent.Models.Rent
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Rent</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.date_begin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_begin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date_end)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_end)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.summ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.summ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.payment_status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.payment_status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Assortment.id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Assortment.id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.realname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.realname)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
